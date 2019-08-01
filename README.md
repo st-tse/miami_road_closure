@@ -18,9 +18,59 @@ Due to limitations in the Twitter API, only allowing for tweets from a one week 
 
 The second method proved to be more reliable and as the traffic data was more recent we were able to determine road closures easily so in the end we focused on the one week prior to data collection when modeling.
 
+We were able to distill this data down to a DataFrame for modeling with the following **data dictionary**: 
+
+
+|Feature|Type|Dataset|Description|
+|---|---|---|---|
+|date|Object (datetime)|model_data|Time of tweet (EDT), formatted yyyy-mm-dd hh:00:00+00:00; covers time span of hh:00 to hh:59|
+|tweets|Object (string)|model_data|COncatenation of all tweets pulled in that hour.|
+|1-95 North|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
+|1-95 South|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
+|95 Express North|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
+|95 Express South|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)| 
+|I-195 East|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
+|I-195 West|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)| 
+|SR 826 North|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
+|SR 826 South|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)| 
+|US-1 North|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
+|US-1 South|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)| 
+
 ### Modeling
 
-Multiple models we tested, but the Random Forest Tree Classifier proved to be the most effective though occasionally overfit. Test set accuracy for each row was cosistently above the baseline
+Model hyperparameters were tuned based on performance of tweets predicting I-95 North traffic. Those hyperparameters were then used to build a model for each of the 12 roadway directions being investigated.
+
+When modeling based on all tweets in an hour, an SVC model of TFIDF Vectorized words gave the best results. This model had the following parameters: 
+~~~~
+tfidf = TfidfVectorizer(
+        token_pattern='[a-zA-z]+ | [A-Za-z]+\-*\d+\W(?:[sS]outh|[Nn]orth|East|West|[NSEW]{1,2}|[nswe]{1,2})*',
+        stop_words='english',
+        max_features=2000,
+        min_df=1,
+        max_df=.6,
+        ngram_range=(2,5)
+)
+svc = SVC(kernel='poly', gamma=550, C=0.004, degree=1)
+~~~~
+When modeling based on tweets from news sites only in an hour, a Random Forest model of TFIDF Vectorized words gave the best results. This model had the following parameters: 
+~~~~
+tfidf = TfidfVectorizer(
+        token_pattern='[a-zA-z]+ | [A-Za-z]+\-*\d+\W(?:[sS]outh|[Nn]orth|East|West|[NSEW]{1,2}|[nswe]{1,2})*',
+        stop_words='english',
+        max_features=1000,
+        min_df=1,
+        max_df=.6,
+        ngram_range=(2,5)
+)
+rf = RandomForestClassifier(max_depth=3, max_features=0.3, min_samples_leaf=2, 
+                            min_samples_split=0.2, n_estimators=4
+                           )
+~~~~
+Model performance: 
+
+We found that models tuned for one direction of a road also performed well on the opposite direction of that road. However, tuning parameters of a model to one road does not appear to give the highest performing models for other roads. It would be possible to improve model performance by adjusting the parameters for each road (or having different parameters for highways versus major roadways). 
+
+We opted not to tune the model parameters to each road in order to improve scalability. 
 
 ### Application
 
