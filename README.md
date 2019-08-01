@@ -78,15 +78,15 @@ As mentioned previously, the intention of this project is to optimize evacution 
 
 ##### Formulation as an Insatance of the Maximum Flow Problem
 
-We recommend applying our model's real-time road predictive abilities to a formulation of the <b>Maximum Flow problem<\b> and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computational efficiency of Simplex. The weighting of the edges should be some function of the road's capacity and speed limit.
+We recommend applying our model's real-time road predictive abilities to a formulation of the <b>Maximum Flow problem</b> and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computational efficiency of Simplex. The weighting of the edges should be some function of the road's capacity and speed limit.
     
-![Maximum Flow Network](Images/Minimum-cost-network-flow-model.png)
+![Maximum Flow Network](Images/ford_fulkerson11.png)
 
 ##### Reducing Computation TIme
 
-To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a <b>super-sink<\b> and sources to a <b>super-source<\b> and you can maximize traffic flow during evacuation like any other instance of the Maximum Flow Problem in AMPL. 
+To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a <b>super-sink</b> and sources to a <b>super-source</b> and you can maximize traffic flow during evacuation like any other instance of the Maximum Flow Problem in AMPL. 
     
-![Super Nodes](330px-Max_flow.svg.png)
+![Super Nodes](Images/584_a.gif))
 
 
 
