@@ -74,7 +74,21 @@ We opted not to tune the model parameters to each road in order to improve scala
 
 ### Application
 
-As mentioned previously, the intention of this project is to optimize evacution strategy. The model itself already has applications in optimizing routing, say from a starting point to a destination, but when a large population is try to move in the same general direction something more complex is required to prevent even more traffic problems from arising. We recommend applying our model's real-time road predictive abilities to a formulation of the Maximum Flow problem and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computationa efficiency of Simplex. To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a super-sink and sources to a super-source and you can maximize traffic flow during evacuation like any other network flow problem.
+As mentioned previously, the intention of this project is to optimize evacution strategy. The model itself already has applications in optimizing routing, say from a starting point to a destination, but when a large population is try to move in the same general direction something more complex is required to prevent even more traffic problems from arising. 
+
+##### Formulation as an Insatance of the Maximum Flow Problem
+
+We recommend applying our model's real-time road predictive abilities to a formulation of the <b>Maximum Flow problem<\b> and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computational efficiency of Simplex. The weighting of the edges should be some function of the road's capacity and speed limit.
+    
+![Maximum Flow Network](Images/Minimum-cost-network-flow-model.png)
+
+##### Reducing Computation TIme
+
+To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a <b>super-sink<\b> and sources to a <b>super-source<\b> and you can maximize traffic flow during evacuation like any other instance of the Maximum Flow Problem in AMPL. 
+    
+![Super Nodes](330px-Max_flow.svg.png)
+
+
 
 
 
