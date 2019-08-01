@@ -2,9 +2,9 @@
 
 #### Contributors:
 - Stephen Tse
-- Marguerite Siboni
-- Kevin Roesch
-- Eli Regen
+- Marguerite Siboni: https://github.com/msiboni88
+- Kevin Roesch: https://github.com/kevincroesch
+- Eli Regen: https://github.com/eregen
 
 ### Problems Statement:
 
@@ -14,7 +14,7 @@ By leveraging social media, specifically twitter, we hope to model road closures
 
 ### Data Collection
 
-Due to limitations in the Twitter API, only allowing for tweets from a one week timeframe to be gathered, we used a package called GetOldTweets3 which allowed us to gather tweets from select news and traffic reporting twitter pages over the past year. An alternative appraoch that we undertook was collecting as many tweets as possible over the one week allowed window, regardless of source, and tried using those as well. The first method produced more usable observations, whereas the second produced more information per observation.
+Due to limitations in the Twitter API, only allowing for tweets from a one week timeframe to be gathered, we used a package called <b>GetOldTweets3</b> which allowed us to gather tweets from select news and traffic reporting twitter pages over the past year. An alternative approach that we undertook was collecting as many tweets as possible over the one week allowed window, regardless of source, and tried using those as well. The first method produced more usable observations, whereas the second produced more information per observation.
 
 The second method proved to be more reliable and as the traffic data was more recent we were able to determine road closures easily so in the end we focused on the one week prior to data collection when modeling.
 
@@ -40,7 +40,7 @@ We were able to distill this data down to a DataFrame for modeling with the foll
 
 Model hyperparameters were tuned based on performance of tweets predicting I-95 North traffic. Those hyperparameters were then used to build a model for each of the 12 roadway directions being investigated.
 
-When modeling based on all tweets in an hour, an SVC model of TFIDF Vectorized words gave the best results. This model had the following parameters: 
+When modeling based on all tweets in an hour, an <b>SVC model</b> of <b>TFIDF Vectorized</b> words gave the best results. This model had the following parameters: 
 ~~~~
 tfidf = TfidfVectorizer(
         token_pattern='[a-zA-z]+ | [A-Za-z]+\-*\d+\W(?:[sS]outh|[Nn]orth|East|West|[NSEW]{1,2}|[nswe]{1,2})*',
@@ -66,7 +66,7 @@ rf = RandomForestClassifier(max_depth=3, max_features=0.3, min_samples_leaf=2,
                             min_samples_split=0.2, n_estimators=4
                            )
 ~~~~
-Model performance: 
+##### Model performance: 
 
 We found that models tuned for one direction of a road also performed well on the opposite direction of that road. However, tuning parameters of a model to one road does not appear to give the highest performing models for other roads. It would be possible to improve model performance by adjusting the parameters for each road (or having different parameters for highways versus major roadways). 
 
@@ -76,19 +76,14 @@ We opted not to tune the model parameters to each road in order to improve scala
 
 As mentioned previously, the intention of this project is to optimize evacution strategy. The model itself already has applications in optimizing routing, say from a starting point to a destination, but when a large population is try to move in the same general direction something more complex is required to prevent even more traffic problems from arising. 
 
-##### Formulation as an Insatance of the Maximum Flow Problem
+##### Formulation as an Insatance of the Maximum Flow Problem:
 
 We recommend applying our model's real-time road predictive abilities to a formulation of the <b>Maximum Flow problem</b> and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computational efficiency of Simplex. The weighting of the edges should be some function of the road's capacity and speed limit.
     
 ![Maximum Flow Network](Images/ford_fulkerson11.png)
 
-##### Reducing Computation TIme
+##### Reducing Computation Time:
 
 To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a <b>super-sink</b> and sources to a <b>super-source</b> and you can maximize traffic flow during evacuation like any other instance of the Maximum Flow Problem in AMPL. 
     
 ![Super Nodes](Images/584_a.gif))
-
-
-
-
-
