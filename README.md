@@ -52,7 +52,7 @@ tfidf = TfidfVectorizer(
 )
 svc = SVC(kernel='poly', gamma=550, C=0.004, degree=1)
 ~~~~
-When modeling based on tweets from news sites only in an hour, a Random Forest model of TFIDF Vectorized words gave the best results. This model had the following parameters: 
+When modeling based on tweets from news sites only in an hour, a <b>Random Forest model</b> of <b>TFIDF Vectorized </b>words gave the best results. This model had the following parameters: 
 ~~~~
 tfidf = TfidfVectorizer(
         token_pattern='[a-zA-z]+ | [A-Za-z]+\-*\d+\W(?:[sS]outh|[Nn]orth|East|West|[NSEW]{1,2}|[nswe]{1,2})*',
@@ -76,7 +76,7 @@ We opted not to tune the model parameters to each road in order to improve scala
 
 As mentioned previously, the intention of this project is to optimize evacution strategy. The model itself already has applications in optimizing routing, say from a starting point to a destination, but when a large population is try to move in the same general direction something more complex is required to prevent even more traffic problems from arising. 
 
-##### Formulation as an Insatance of the Maximum Flow Problem:
+##### Formulation as an Instance of the Maximum Flow Problem:
 
 We recommend applying our model's real-time road predictive abilities to a formulation of the <b>Maximum Flow problem</b> and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computational efficiency of Simplex. The weighting of the edges should be some function of the road's capacity and speed limit.
     
