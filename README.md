@@ -24,7 +24,5 @@ Multiple models we tested, but the Random Forest Tree Classifier proved to be th
 
 ### Application
 
-As mentioned previously, the intention of this project is to optimize evacution strategy. The model itself already has applications in optimizing routing, say from a starting point to a destination, but when a large population is try to move in the same general direction something more complex is required to prevent even more traffic problems from arising. We recommend applying our model's real-time road predictive abilities to a formulation of the Maximum Flow problem and solving as a linear program to get directions for groups in different starting areas. As road conditions change these instructions can be quickly updated due to the model using live social media data and the computationa efficiency of Simplex. To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a super-sink and sources to a super-source and you can maximize traffic flow during evacuation like any other network flow problem.
-
-
+As mentioned previously, the intention of this project is to optimize evacution strategy. The model itself already has applications in optimizing routing, say from a starting point to a destination, but when a large population is try to move in the same general direction something more complex is required to prevent even more traffic problems from arising. 
 
