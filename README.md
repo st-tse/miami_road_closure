@@ -2,9 +2,9 @@
 
 #### Contributors:
 - Stephen Tse
-- Marguerite Siboni: https://github.com/msiboni88
-- Kevin Roesch: https://github.com/kevincroesch
-- Eli Regen: https://github.com/eregen
+- [Marguerite Siboni:](https://github.com/msiboni88)
+- [Kevin Roesch:](https://github.com/kevincroesch)
+- [Eli Regen:](https://github.com/eregen)
 
 ### Problems Statement:
 
@@ -16,7 +16,10 @@ By leveraging social media, specifically twitter, we hope to model road closures
 
 Due to limitations in the Twitter API, only allowing for tweets from a one week timeframe to be gathered, we used a package called <b>GetOldTweets3</b> which allowed us to gather tweets from select news and traffic reporting twitter pages over the past year. An alternative approach that we undertook was collecting as many tweets as possible over the one week allowed window, regardless of source, and tried using those as well. The first method produced more usable observations, whereas the second produced more information per observation.
 
-The second method proved to be more reliable and as the traffic data was more recent we were able to determine road closures easily so in the end we focused on the one week prior to data collection when modeling.
+The second method proved to be more reliable and as the traffic data was more recent we were able to determine road closures easily so in the end we focused on the one week prior to data collection when modeling. 
+
+The most frequently used words from each method are shown in the word clouds below: 
+![](https://github.com/st-tse/miami_road_closure/blob/master/Images/word%20clouds.png)
 
 We were able to distill this data down to a DataFrame for modeling with the following **data dictionary**: 
 
@@ -24,7 +27,7 @@ We were able to distill this data down to a DataFrame for modeling with the foll
 |Feature|Type|Dataset|Description|
 |---|---|---|---|
 |date|Object (datetime)|model_data|Time of tweet (EDT), formatted yyyy-mm-dd hh:00:00+00:00; covers time span of hh:00 to hh:59|
-|tweets|Object (string)|model_data|COncatenation of all tweets pulled in that hour.|
+|tweets|Object (string)|model_data|Concatenation of all tweets pulled in that hour.|
 |1-95 North|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
 |1-95 South|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
 |95 Express North|int|model_data|Staus of major roadway in direction indicated (0 = no lane closures or incidents for duration of hour, 1 = any type of lane closure or incident during hour duration)|  
@@ -65,10 +68,13 @@ cvec = TfidfVectorizer(
 svc = SVC(kernel='poly', gamma=10, C=0.001, degree=0)
 ~~~~
 ##### Model performance: 
-
+![](https://github.com/st-tse/miami_road_closure/blob/master/Images/performance.png)
 We found that models tuned for one direction of a road also performed well on the opposite direction of that road. However, tuning parameters of a model to one road does not appear to give the highest performing models for other roads. It would be possible to improve model performance by adjusting the parameters for each road (or having different parameters for highways versus major roadways). 
 
 We opted not to tune the model parameters to each road in order to improve scalability. 
+
+The ROC curves from each method for our largest accuracy improvement (purple) and our smallest accuracy improvement (blue) from the baseline are shown below: 
+![](https://github.com/st-tse/miami_road_closure/blob/master/Images/ROC_AUC.png)
 
 ### Application
 
@@ -84,4 +90,4 @@ We recommend applying our model's real-time road predictive abilities to a formu
 
 To formulate properly set safe areas as sinks, interchanges, ramps, and intersections as nodes, and populated areas as soures. Connnect sinks to a <b>super-sink</b> and sources to a <b>super-source</b> and you can maximize traffic flow during evacuation like any other instance of the Maximum Flow Problem in AMPL. 
     
-![Super Nodes](Images/584_a.gif))
+![Super Nodes](Images/584_a.gif)
