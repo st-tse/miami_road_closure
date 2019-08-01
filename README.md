@@ -60,7 +60,7 @@ cvec = TfidfVectorizer(
         max_features=1700,
         min_df=1,
         max_df=.3,
-        ngram_range=(4,7)
+        ngram_range=(4,8)
 )
 svc = SVC(kernel='poly', gamma=10, C=0.001, degree=0)
 ~~~~
