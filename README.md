@@ -54,17 +54,15 @@ svc = SVC(kernel='poly', gamma=550, C=0.004, degree=1)
 ~~~~
 When modeling based on tweets from news sites only in an hour, a <b>Random Forest model</b> of <b>TFIDF Vectorized </b>words gave the best results. This model had the following parameters: 
 ~~~~
-tfidf = TfidfVectorizer(
+cvec = TfidfVectorizer(
         token_pattern='[a-zA-z]+ | [A-Za-z]+\-*\d+\W(?:[sS]outh|[Nn]orth|East|West|[NSEW]{1,2}|[nswe]{1,2})*',
         stop_words='english',
-        max_features=1000,
+        max_features=1700,
         min_df=1,
-        max_df=.6,
-        ngram_range=(2,5)
+        max_df=.3,
+        ngram_range=(4,7)
 )
-rf = RandomForestClassifier(max_depth=3, max_features=0.3, min_samples_leaf=2, 
-                            min_samples_split=0.2, n_estimators=4
-                           )
+svc = SVC(kernel='poly', gamma=10, C=0.001, degree=0)
 ~~~~
 ##### Model performance: 
 
